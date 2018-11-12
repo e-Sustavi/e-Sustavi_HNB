@@ -56,5 +56,6 @@ class SaleOrderLine(models.Model):
     @api.multi
     def _prepare_purchase_order_line(self, product_id, product_qty, product_uom, values, po, supplier):
         red = super(SaleOrderLine, self)._prepare_purchase_order_line(product_id, product_qty, product_uom, values, po, supplier)
-        red['name'] = values['move_dest_ids'].sale_line_id.name
+        if values.get('move_dest_ids'):
+            red['name'] = values['move_dest_ids'].sale_line_id.name
         return red
